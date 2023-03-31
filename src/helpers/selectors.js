@@ -13,11 +13,7 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-/* "3": {
-  id: 3,
-  time: "2pm",
-  interview: { student: "Archie Cohen", interviewer: 2 }
-}*/
+
 if (!interview) {
   return null;
 }
