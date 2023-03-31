@@ -25,3 +25,17 @@ return {
 };
 
 }
+
+export function getInterviewersForDay(state, day) {
+  const filteredDay = state.days.find(elem => elem.name === day);
+  
+  const interviewersArr = filteredDay ? filteredDay.interviewers : [];
+
+  const matchingInterviewers = [];
+
+  interviewersArr.forEach((int) => {
+    matchingInterviewers.push(state.interviewers[int]);
+  });
+  
+  return matchingInterviewers;
+}
