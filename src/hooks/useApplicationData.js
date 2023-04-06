@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import axios from 'axios';
 import useDispatch from "./useDispatch";
-import { SET_DAY, SET_APPLICATION_DATA, SET_INTERVIEW } from '../constants';
+import { ACTION } from '../constants';
 
 
 
@@ -16,7 +16,7 @@ export default function useApplicationData() {
   });
   
 
-  const setDay = day => dispatch({ type: SET_DAY, value: day });
+  const setDay = day => dispatch({ type: ACTION.SET_DAY, value: day });
 
   useEffect(() => {
     Promise.all([
@@ -24,7 +24,7 @@ export default function useApplicationData() {
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
     ]).then((all) => {
-      dispatch({ type: SET_APPLICATION_DATA, value: {days: all[0].data, appointments: all[1].data, interviewers: all[2].data} });
+      dispatch({ type: ACTION.SET_APPLICATION_DATA, value: { days: all[0].data, appointments: all[1].data, interviewers: all[2].data} });
       // setState((prev) => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     })
     .catch((error) => {
@@ -65,7 +65,7 @@ export default function useApplicationData() {
         //   appointments,
         //   days
         // });
-        dispatch({ type: SET_INTERVIEW, value: { appointments, days }});
+        dispatch({ type: ACTION.SET_INTERVIEW, value: { appointments, days }});
       });
   }
 
@@ -93,7 +93,7 @@ export default function useApplicationData() {
       //   appointments,
       //   days
       // });
-      dispatch({ type: SET_INTERVIEW, value: { appointments, days }});
+      dispatch({ type: ACTION.SET_INTERVIEW, value: { appointments, days }});
     });
   }
 
