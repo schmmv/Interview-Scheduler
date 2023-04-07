@@ -23,7 +23,6 @@ export default function reducer(state, action) {
 
       const days = [...state.days];
       const existingInterview = state.appointments[action.value.id].interview;
-      // const spots = state.days[dayNumber(state.day)].spots;
       if (!existingInterview) {
         if (appointment.interview) {
           days[dayNumber(state.day)].spots -= 1;
@@ -33,12 +32,6 @@ export default function reducer(state, action) {
           days[dayNumber(state.day)].spots += 1;
         }
       }
-      // const day = {
-      //   ...state.days[dayNumber(state.day)],
-      //   spots: appointment.interview ? spots - 1 : spots + 1
-      // };
-
-      // days[dayNumber(state.day)] = day;
 
       return { ...state, appointments, days };
 
