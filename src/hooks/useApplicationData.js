@@ -1,20 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import axios from 'axios';
-import useDispatch from "./useDispatch";
 import { ACTION } from '../constants';
+import reducer from "../helpers/reducer";
 
 
 
 
 export default function useApplicationData() {
 
-  const [state, dispatch] = useDispatch({
+  const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {}
   });
   
+  // const dayNumber = (day) => {
+  //   return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].findIndex(x => x === day);
+  // };
 
   const setDay = day => dispatch({ type: ACTION.SET_DAY, value: day });
 
@@ -32,29 +35,39 @@ export default function useApplicationData() {
       console.log(error.response.headers);
       console.log(error.response.data);
     });
-  }, [dispatch]);
+  }, []);
 
-  const dayNumber = (day) => {
-    return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].findIndex(x => x === day);
-  }
+  //WebSocket 
+  // useEffect(() => {
+  //   const socket = new WebSocket('ws://localhost:8001');
+  //   socket.onopen = (event) => {
+  //     socket.send("Sending text from client to server");
+  //   };
+  //   const cleanup = () => {
+  //     socket.close();
+  //   }
+    
+  // }, []);
+
+ 
 
   function bookInterview(id, interview) {
 
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
+    // const appointment = {
+    //   ...state.appointments[id],
+    //   interview: { ...interview }
+    // };
+    // const appointments = {
+    //   ...state.appointments,
+    //   [id]: appointment
+    // };
 
-    const day = {
-      ...state.days[dayNumber(state.day)],
-      spots: state.days[dayNumber(state.day)].spots - 1
-    };
-    const days = state.days;
-    days[dayNumber(state.day)] = day;
+    // const day = {
+    //   ...state.days[dayNumber(state.day)],
+    //   spots: state.days[dayNumber(state.day)].spots - 1
+    // };
+    // const days = state.days;
+    // days[dayNumber(state.day)] = day;
 
    return axios.put(`/api/appointments/${id}`, {
         interview
@@ -65,27 +78,27 @@ export default function useApplicationData() {
         //   appointments,
         //   days
         // });
-        dispatch({ type: ACTION.SET_INTERVIEW, value: { appointments, days }});
+        dispatch({ type: ACTION.SET_INTERVIEW, value: { id, interview }});
       });
   }
 
   function cancelInterview(id) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
+    // const appointment = {
+    //   ...state.appointments[id],
+    //   interview: null
+    // };
+    // const appointments = {
+    //   ...state.appointments,
+    //   [id]: appointment
+    // };
 
-    const day = {
-      ...state.days[dayNumber(state.day)],
-      spots: state.days[dayNumber(state.day)].spots + 1
-    };
+    // const day = {
+    //   ...state.days[dayNumber(state.day)],
+    //   spots: state.days[dayNumber(state.day)].spots + 1
+    // };
 
-    const days = state.days;
-    days[dayNumber(state.day)] = day;
+    // const days = state.days;
+    // days[dayNumber(state.day)] = day;
    return axios.delete(`/api/appointments/${id}`)
     .then(() => {
       // setState({
@@ -93,7 +106,7 @@ export default function useApplicationData() {
       //   appointments,
       //   days
       // });
-      dispatch({ type: ACTION.SET_INTERVIEW, value: { appointments, days }});
+      dispatch({ type: ACTION.SET_INTERVIEW, value: { id, interview: null }});
     });
   }
 
