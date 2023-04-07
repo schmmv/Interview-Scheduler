@@ -1,11 +1,5 @@
 
-
-
-
-// const useDispatch = (initialData) => {
-  const dayNumber = (day) => {
-    return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].findIndex(x => x === day);
-  };
+import { dayNumber } from "./selectors";
 
  export default function reducer(state, action) {
     switch (action.type) {
@@ -39,16 +33,10 @@
         const days = state.days;
         days[dayNumber(state.day)] = day;
 
-       console.log({...state, appointments, days });
         return {...state, appointments, days };
       default:
         throw new Error(`Tried to reduce with unsupported action type: ${action.type}`);
     }
   }
-
-  // const [state, dispatch] = useReducer(reducer, initialData);
-
-  // return [state, dispatch];
-// }
 
 

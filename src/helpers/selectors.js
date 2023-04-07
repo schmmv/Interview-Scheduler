@@ -39,3 +39,7 @@ export function getInterviewersForDay(state, day) {
   
   return matchingInterviewers;
 }
+
+export function dayNumber(day) {
+  return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].findIndex(x => x === day);
+}
