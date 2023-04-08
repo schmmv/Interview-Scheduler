@@ -13,9 +13,9 @@ export default function reducer(state, action) {
     case "SET_INTERVIEW":
       const appointment = {
         ...state.appointments[action.value.id],
-        interview: action.value.interview ? { ...action.value.interview } : null
+        interview: action.value.interview ? action.value.interview : null
       };
-
+      console.log("Updated appointment:", appointment);
       const appointments = {
         ...state.appointments,
         [action.value.id]: appointment,
@@ -23,6 +23,7 @@ export default function reducer(state, action) {
 
       const days = [...state.days];
       const existingInterview = state.appointments[action.value.id].interview;
+
       if (!existingInterview) {
         if (appointment.interview) {
           days[dayNumber(state.day)].spots -= 1;
