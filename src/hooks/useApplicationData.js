@@ -31,13 +31,12 @@ export default function useApplicationData() {
   useEffect(() => {
     const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
     socket.onopen = (event) => {
-      socket.send("ping");
+      // socket.send("ping");
 
       socket.onmessage = event => {
         const msg = JSON.parse(event.data);
-        console.log("Message Received From Server:", msg);
+        // console.log("Message Received From Server:", msg);
         if (msg.type === "SET_INTERVIEW") {
-          console.log("dispatching set interview");
           dispatch({ type: ACTION.SET_INTERVIEW, value: { id: msg.id, interview: msg.interview }});
         }
       };
