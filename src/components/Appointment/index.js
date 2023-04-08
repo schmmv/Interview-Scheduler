@@ -61,7 +61,7 @@ export default function Appointment(props) {
     if (props.interview === null && mode === SHOW) {
       transition(EMPTY);
     }
-  }, [props.interview, transition]);
+  }, [props.interview, transition, mode]);
 
   return (
     <article className='appointment'>
