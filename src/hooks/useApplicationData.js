@@ -37,7 +37,7 @@ export default function useApplicationData() {
         const msg = JSON.parse(event.data);
         // console.log("Message Received From Server:", msg);
         if (msg.type === "SET_INTERVIEW") {
-          dispatch({ type: ACTION.SET_INTERVIEW, value: { id: msg.id, interview: msg.interview }});
+          dispatch({ type: ACTION.SET_INTERVIEW, value: { id: msg.id, interview: msg.interview } });
         }
       };
     };
