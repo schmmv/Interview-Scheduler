@@ -25,6 +25,7 @@ export default function Form(props) {
             type="text"
             placeholder="Enter Student Name"
             value={student}
+            data-testid="student-name-input"
           />
         </form>
         <InterviewerList
