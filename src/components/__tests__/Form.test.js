@@ -16,14 +16,15 @@ describe("Form", () => {
     }
   ];
   
-  const { getByPlaceholderText } = render(<Form interviewers={interviewers}/>);
-  const { getByTestId } = render(<Form interviewers={interviewers} name="Lydia Miller-Jones" />);
-
   it("renders without student name if not provided", () => {
+    const { getByPlaceholderText } = render(<Form interviewers={interviewers}/>);
+
     expect(getByPlaceholderText("Enter Student Name")).toHaveValue("");
   });
-
+  
   it("renders with initial student name", () => {
+    const { getByTestId } = render(<Form interviewers={interviewers} student="Lydia Miller-Jones" />);
+
     expect(getByTestId("student-name-input")).toHaveValue("Lydia Miller-Jones");
   });
 
