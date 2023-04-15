@@ -51,18 +51,18 @@ export default function useApplicationData() {
 
     return axios.put(`/api/appointments/${id}`, {
       interview
-    })
-      .then(() => {
-        dispatch({ type: ACTION.SET_INTERVIEW, value: { id, interview } });
-      });
+    });
+      // .then(() => {
+      //   dispatch({ type: ACTION.SET_INTERVIEW, value: { id, interview } });
+      // });
   }
 
   function cancelInterview(id) {
 
-    return axios.delete(`/api/appointments/${id}`)
-      .then(() => {
-        dispatch({ type: ACTION.SET_INTERVIEW, value: { id, interview: null } });
-      });
+    return axios.delete(`/api/appointments/${id}`);
+      // .then(() => {
+      //   dispatch({ type: ACTION.SET_INTERVIEW, value: { id, interview: null } });
+      // });
   }
 
   return { state, setDay, bookInterview, cancelInterview };
