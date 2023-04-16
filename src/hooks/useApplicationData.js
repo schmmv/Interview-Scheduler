@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
 import axios from 'axios';
 import { ACTION } from '../constants';
-import reducer from "../helpers/reducer";
+import reducer from "../reducers/application";
 
 export default function useApplicationData() {
 
@@ -28,41 +28,41 @@ export default function useApplicationData() {
   }, []);
 
   // WebSocket 
-  useEffect(() => {
-    const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-    socket.onopen = (event) => {
-      // socket.send("ping");
+  // useEffect(() => {
+  //   const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+  //   socket.onopen = (event) => {
+  //     // socket.send("ping");
 
-      socket.onmessage = event => {
-        const msg = JSON.parse(event.data);
-        // console.log("Message Received From Server:", msg);
-        if (msg.type === "SET_INTERVIEW") {
-          dispatch({ type: ACTION.SET_INTERVIEW, value: { id: msg.id, interview: msg.interview } });
-        }
-      };
-    };
-    const cleanup = () => {
-      socket.close();
-    }
-    return cleanup;
-  }, []);
+  //     socket.onmessage = event => {
+  //       const msg = JSON.parse(event.data);
+  //       // console.log("Message Received From Server:", msg);
+  //       if (msg.type === "SET_INTERVIEW") {
+  //         dispatch({ type: ACTION.SET_INTERVIEW, value: { id: msg.id, interview: msg.interview } });
+  //       }
+  //     };
+  //   };
+  //   const cleanup = () => {
+  //     socket.close();
+  //   }
+  //   return cleanup;
+  // }, []);
 
   function bookInterview(id, interview) {
 
     return axios.put(`/api/appointments/${id}`, {
       interview
-    });
-      // .then(() => {
-      //   dispatch({ type: ACTION.SET_INTERVIEW, value: { id, interview } });
-      // });
+    })
+      .then(() => {
+        dispatch({ type: ACTION.SET_INTERVIEW, value: { id, interview } });
+      });
   }
 
   function cancelInterview(id) {
 
-    return axios.delete(`/api/appointments/${id}`);
-      // .then(() => {
-      //   dispatch({ type: ACTION.SET_INTERVIEW, value: { id, interview: null } });
-      // });
+    return axios.delete(`/api/appointments/${id}`)
+      .then(() => {
+        dispatch({ type: ACTION.SET_INTERVIEW, value: { id, interview: null } });
+      });
   }
 
   return { state, setDay, bookInterview, cancelInterview };

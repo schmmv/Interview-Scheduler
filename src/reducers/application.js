@@ -1,5 +1,5 @@
 
-import { dayNumber } from "./selectors";
+import { dayNumber } from "../helpers/selectors";
 
 export default function reducer(state, action) {
   switch (action.type) {
@@ -23,6 +23,7 @@ export default function reducer(state, action) {
 
       const days = [...state.days];
       const existingInterview = state.appointments[action.value.id].interview;
+      console.log("original spots:", days[dayNumber(state.day)].spots);
 
       if (!existingInterview) {
         if (appointment.interview) {
@@ -33,7 +34,8 @@ export default function reducer(state, action) {
           days[dayNumber(state.day)].spots += 1;
         }
       }
-
+    
+      console.log("Updated spots:", days[dayNumber(state.day)].spots);
       return { ...state, appointments, days };
 
     default:
