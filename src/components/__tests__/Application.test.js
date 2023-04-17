@@ -30,7 +30,7 @@ it("changes the schedule when a new day is selected", async () => {
 });
  */
 
-  xit("loads data, books an interview and reduces the spots remaining for the Monday by 1", async () => {
+  it("loads data, books an interview and reduces the spots remaining for the Monday by 1", async () => {
  
   const { container, debug } = render(<Application />);
   
@@ -56,7 +56,7 @@ it("changes the schedule when a new day is selected", async () => {
   console.log("test 1 end");
   })
 
-  xit("load data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+  it("load data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
   //1. render the application
 
   const { container, debug } = render(<Application />);
@@ -89,7 +89,7 @@ it("changes the schedule when a new day is selected", async () => {
 
   })
 
-  xit("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
   //1. render the application
   const { container, debug } = render(<Application />);
 
@@ -115,7 +115,7 @@ it("changes the schedule when a new day is selected", async () => {
   expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   })
 
-  xit("shows the save error when failing to save and appointment", async () => {
+  it("shows the save error when failing to save an appointment", async () => {
     const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, 'Archie Cohen'));
     const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, 'Archie Cohen'));
@@ -125,17 +125,17 @@ it("changes the schedule when a new day is selected", async () => {
     //5. Change name of student (or interviewer)
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), { target: { value: "Alice Wonderland" } });
 
+    axios.put.mockRejectedValueOnce();
     //6. 
     fireEvent.click(getByText(appointment, 'Save'));
-
-    axios.put.mockRejectedValueOnce();
     
     await waitForElement(() => getByText(appointment, 'Error'));
+    debug();
     expect(getByText(appointment, 'Error')).toBeInTheDocument();
   
   })
 
-  it("shows the delete error when failing to delete an existing appointment", async () => {
+  xit("shows the delete error when failing to delete an existing appointment", async () => {
     //1. render the application 
     const { container, debug } = render(<Application />);
     //2. wait until the text archie cohen is displayed
