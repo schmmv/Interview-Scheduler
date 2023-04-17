@@ -29,7 +29,7 @@ describe("Application", () => {
     WS.clean();
   });
 
-  xit("defaults to Monday and changes the schedule when a new day is selected", () => {
+  it("defaults to Monday and changes the schedule when a new day is selected", () => {
   const { getByText } = render(<Application />);
 
   return waitForElement(() => getByText('Monday')).then(() => {
@@ -157,7 +157,7 @@ it("changes the schedule when a new day is selected", async () => {
   expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   })
 
-  xit("shows the save error when failing to save an appointment", async () => {
+  it("shows the save error when failing to save an appointment", async () => {
     const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, 'Archie Cohen'));
     const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, 'Archie Cohen'));
@@ -177,7 +177,7 @@ it("changes the schedule when a new day is selected", async () => {
   
   })
 
-  xit("shows the delete error when failing to delete an existing appointment", async () => {
+  it("shows the delete error when failing to delete an existing appointment", async () => {
     //1. render the application 
     const { container, debug } = render(<Application />);
     //2. wait until the text archie cohen is displayed
@@ -188,9 +188,10 @@ it("changes the schedule when a new day is selected", async () => {
 
     //4. Click delete
     fireEvent.click(getByAltText(appointment, 'Delete'));
-    fireEvent.click(getByText(appointment, "Confirm"));
 
     axios.delete.mockRejectedValueOnce();
+    fireEvent.click(getByText(appointment, "Confirm"));
+
     await waitForElement(() => getByText(appointment, 'Error'));
     expect(getByText(appointment, 'Error')).toBeInTheDocument();
     
