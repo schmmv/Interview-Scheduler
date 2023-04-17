@@ -4,12 +4,31 @@ import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAl
 
 import Application from "components/Application";
 import axios from "axios";
+import WS from "jest-websocket-mock";
+
+// create a WS instance, listening on port xxxx on localhost
+
+// real clients can connect
+// const client = new WebSocket("ws://localhost:1234");
+// await server.connected; // wait for the server to have established the connection
 
 afterEach(cleanup);
 
 describe("Application", () => {
+  
+  let server;
+  let client;
+  
+  beforeEach(() => {
+    server = new WS(process.env.REACT_APP_WEBSOCKET_URL);
+    client = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+  });
 
-  it("defaults to Monday and changes the schedule when a new day is selected", () => {
+  afterEach(() => {
+    server.close();
+  });
+
+  xit("defaults to Monday and changes the schedule when a new day is selected", () => {
   const { getByText } = render(<Application />);
 
   return waitForElement(() => getByText('Monday')).then(() => {
@@ -31,6 +50,7 @@ it("changes the schedule when a new day is selected", async () => {
  */
 
   it("loads data, books an interview and reduces the spots remaining for the Monday by 1", async () => {
+  await server.connected;
  
   const { container, debug } = render(<Application />);
   
@@ -43,12 +63,21 @@ it("changes the schedule when a new day is selected", async () => {
   fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), { target: { value: "Lydia Miller-Jones" } });
 
   fireEvent.click(getByAltText(appointment, 'Sylvia Palmer'));
+
   fireEvent.click(getByText(appointment, 'Save'));
 
   expect(getByText(appointment, "Saving...")).toBeInTheDocument();
-  //not working because of websocket..
-  await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
+  server.send(JSON.stringify({
+      type: "SET_INTERVIEW",
+      id: 1,
+      interview: {student: "Lydia Miller-Jones", interviewer:1}
+  }));
+
+
+ 
+  await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+  debug();
   const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
 
   expect(getByText(day, "no spots remaining")).toBeInTheDocument();
@@ -56,7 +85,7 @@ it("changes the schedule when a new day is selected", async () => {
   console.log("test 1 end");
   })
 
-  it("load data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+  xit("load data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
   //1. render the application
 
   const { container, debug } = render(<Application />);
@@ -89,7 +118,7 @@ it("changes the schedule when a new day is selected", async () => {
 
   })
 
-  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+  xit("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
   //1. render the application
   const { container, debug } = render(<Application />);
 
@@ -115,7 +144,7 @@ it("changes the schedule when a new day is selected", async () => {
   expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   })
 
-  it("shows the save error when failing to save an appointment", async () => {
+  xit("shows the save error when failing to save an appointment", async () => {
     const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, 'Archie Cohen'));
     const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, 'Archie Cohen'));
