@@ -22,18 +22,27 @@ export default function reducer(state, action) {
       }
 
       const days = [...state.days];
+      const day = {
+        ...state.days[dayNumber(state.day)]
+      }
+
       const existingInterview = state.appointments[action.value.id].interview;
-      console.log("original spots:", days[dayNumber(state.day)].spots);
+      console.log("original spots:", state.days[dayNumber(state.day)].spots);
 
       if (!existingInterview) {
         if (appointment.interview) {
-          days[dayNumber(state.day)].spots -= 1;
+          // days[dayNumber(state.day)].spots -= 1;
+          // day.spots -= 1;
+          day.spots = state.days[dayNumber(state.day)].spots - 1;
         }
       } else {
         if (!appointment.interview) {
-          days[dayNumber(state.day)].spots += 1;
+          // days[dayNumber(state.day)].spots += 1;
+          // day.spots += 1;
+          day.spots = state.days[dayNumber(state.day)].spots + 1;
         }
       }
+      days[dayNumber(state.day)] = day;
     
       console.log("Updated spots:", days[dayNumber(state.day)].spots);
       return { ...state, appointments, days };
