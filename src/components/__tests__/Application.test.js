@@ -26,6 +26,7 @@ describe("Application", () => {
 
   afterEach(() => {
     server.close();
+    WS.clean();
   });
 
   xit("defaults to Monday and changes the schedule when a new day is selected", () => {
@@ -68,25 +69,24 @@ it("changes the schedule when a new day is selected", async () => {
 
   expect(getByText(appointment, "Saving...")).toBeInTheDocument();
 
+  //mock WebSocket
   server.send(JSON.stringify({
       type: "SET_INTERVIEW",
       id: 1,
       interview: {student: "Lydia Miller-Jones", interviewer:1}
   }));
-
-
  
   await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
-  debug();
+
   const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
 
   expect(getByText(day, "no spots remaining")).toBeInTheDocument();
   // console.log("end of add test: \n", prettyDOM(container));
-  console.log("test 1 end");
   })
 
-  xit("load data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
-  //1. render the application
+  it("load data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+  await server.connected;
+    //1. render the application
 
   const { container, debug } = render(<Application />);
   //2. wait until the text archie cohen is displayed
@@ -106,20 +106,25 @@ it("changes the schedule when a new day is selected", async () => {
   
   // //7. check that the status says deleting
   expect(getByText(appointment, "Deleting...")).toBeInTheDocument();
+   //mock WebSocket
+   server.send(JSON.stringify({
+    type: "SET_INTERVIEW",
+    id: 2,
+    interview: null
+  }));
+
   // //8. wait for the blank element is displayed
   await waitForElement(() => getByAltText(appointment, "Add"));
-
   // //9. get monday
   const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
   // //10. check that monday has an extra spot remaining now
   expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   // console.log("end of add test: \n", prettyDOM(container));
-  console.log("test 2 end");
-
   })
 
-  xit("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
-  //1. render the application
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+  await server.connected;
+    //1. render the application
   const { container, debug } = render(<Application />);
 
   //2. wait until the text archie cohen is displayed
@@ -136,6 +141,14 @@ it("changes the schedule when a new day is selected", async () => {
   fireEvent.click(getByText(appointment, 'Save'));
 
   expect(getByText(appointment, "Saving...")).toBeInTheDocument();
+
+   //mock WebSocket
+   server.send(JSON.stringify({
+    type: "SET_INTERVIEW",
+    id: 2,
+    interview: {student: "Alice Wonderland", interviewer:1}
+  }));
+
   await waitForElement(() => getByText(appointment, "Alice Wonderland"));
   expect(getByText(appointment, "Alice Wonderland")).toBeInTheDocument();
   // //9. get monday
