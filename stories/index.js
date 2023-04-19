@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
@@ -19,7 +18,6 @@ import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
 import Form from "components/Appointment/Form";
 
-
 storiesOf("Button", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -36,9 +34,6 @@ storiesOf("Button", module)
     </Button>
   ));
 
-/**
- * Day List Item stories
- */
 storiesOf("DayListItem", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -50,8 +45,8 @@ storiesOf("DayListItem", module)
     <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} />
   ));
 
-/**
- * Day List stories
+/***************************
+ * Data for Day List stories
  */
 const days = [
   {
@@ -85,8 +80,8 @@ storiesOf("DayList", module)
     <DayList days={days} value={"Wednesday"} onChange={action("setDay")} />
   ));
 
-/**
- * Interviewer List Item stories
+/****************************************
+ * Data for Interviewer List Item stories
  */
 const interviewer = {
   id: 1,
@@ -122,8 +117,8 @@ storiesOf("InterviewerListItem", module)
     />
   ));
 
-/**
- * Interviewer List stories
+/***********************************
+ * Data for Interviewer List stories
  */
 const interviewers = [
   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
@@ -132,7 +127,7 @@ const interviewers = [
   { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 ];
-  
+
 storiesOf("InterviewerList", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -155,16 +150,14 @@ storiesOf("InterviewerList", module)
     />
   ));
 
-  /**
-   * Appointment stories
-   */
-  storiesOf("Appointment", module)
+/**********************************/
+storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: 'white', value: '#fff', default: true }]
   })
-  .add("Appointment", () => <Appointment/>)
+  .add("Appointment", () => <Appointment />)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
-  .add("Header", () => <Header time="12pm"/>)
+  .add("Header", () => <Header time="12pm" />)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
   .add("Show", () => <Show student="Lydia Miller-Jones" interviewer={interviewers[0]} onEdit={action("onEdit")} onDelete={action("onDelete")} />)
   .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={action("onConfirm")} onCancel={action("onCancel")} />)
@@ -187,4 +180,4 @@ storiesOf("InterviewerList", module)
       />
       <Appointment time="5pm" />
     </Fragment>
-  ))
+  ));
