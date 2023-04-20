@@ -1,3 +1,4 @@
+//Mock data
 const fixtures = {
   days: [
     {
@@ -52,7 +53,7 @@ const fixtures = {
     }
   }
 };
-
+//WebSockets (which are mocked in the test file directly), but here for completeness
 export default {
   get: jest.fn(url => {
     if (url === "/api/days") {

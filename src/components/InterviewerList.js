@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // import classNames from 'classnames';
-import 'components/InterviewerList.scss';
-import InterviewerListItem from './InterviewerListItem';
+import "components/InterviewerList.scss";
+import InterviewerListItem from "./InterviewerListItem";
 
+//All Interviewer Icons
 export default function InterviewerList(props) {
   const mappedInterviewers = props.interviewers.map((interviewer) => {
     return (
@@ -14,17 +15,17 @@ export default function InterviewerList(props) {
         selected={interviewer.id === props.value}
         setInterviewer={() => props.onChange(interviewer.id)}
       />
-    )
+    );
   });
   return (
-    <section className='interviewers'>
-      <h4 className='interviewers__header text--light'>Interviewer</h4>
-      <ul className='interviewers__list'>{mappedInterviewers}</ul>
+    <section className="interviewers">
+      <h4 className="interviewers__header text--light">Interviewer</h4>
+      <ul className="interviewers__list">{mappedInterviewers}</ul>
     </section>
   );
 }
 
+//Validate component props
 InterviewerList.propTypes = {
-  interviewers: PropTypes.array.isRequired
+  interviewers: PropTypes.array.isRequired,
 };
-
