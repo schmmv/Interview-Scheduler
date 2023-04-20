@@ -1,8 +1,6 @@
-import React from 'react';
-
+import React from "react";
 import { render, cleanup } from "@testing-library/react";
-
-import DayListItem from 'components/DayListItem';
+import DayListItem from "components/DayListItem";
 
 afterEach(cleanup);
 
