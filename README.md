@@ -5,12 +5,15 @@ This project developed helped develop skills in StoryBook (for building UI compo
 
 ## Features 
 Schedule an Interview
+
 !['Schedule an Interview'](https://github.com/schmmv/scheduler/blob/master/docs/Add_Interview.gif?raw=true)
 
 Edit an Interview
+
 !['Edit an Interview'](https://github.com/schmmv/scheduler/blob/master/docs/Edit_Appointment.gif?raw=true)
 
 Delete an Interview
+
 !['Delete an Interview'](https://github.com/schmmv/scheduler/blob/master/docs/Delete_Appointment.gif?raw=true)
 
 ## Setup
