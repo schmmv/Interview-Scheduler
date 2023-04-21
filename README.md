@@ -21,15 +21,15 @@ Requires the [scheduler api](https://github.com/schmmv/scheduler-api)  backend i
 
 Install dependencies with `npm install`.
 
-### Dependencies
-- Axios
-- React Testing Library
-- react-test-renderer
-- jest-websocket-mock
-- prop-types
-- StoryBook
-- Jest
-- Sass
+>#### Dependencies
+>- Axios
+>- React Testing Library
+>- react-test-renderer
+>- jest-websocket-mock
+>- prop-types
+>- StoryBook
+>- Jest
+>- Sass
 
 ## Running Webpack Development Server
 
