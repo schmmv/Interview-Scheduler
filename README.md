@@ -1,7 +1,7 @@
 # Interview Scheduler
 Interview Scheduler is a single-page app where users can view a schedule of appointments/interviews, and can add, cancel, or edit them. Interviews can be made between 12-5pm, Mon - Fri.
 The front end was built with React and uses the WebSocket API to make persistent real-time updates between multiple users.
-This project developed helped develop skills in StoryBook (for building UI components), and integration (Jest) and E2E testing (Cypress).
+This project helped develop skills in StoryBook (for building UI components), and integration (Jest) and E2E testing (Cypress).
 
 ## Features 
 Schedule an Interview
